@@ -15,12 +15,16 @@
         "js": ["js/matches/youtubeVideo/lib.js","js/matches/youtubeVideo/youtubeVideoHandler.js"],
         "run_at": "document_end"
         }],
-    "icons":{
-        "128": "/assets/icons/logo.png"
-    },
+    "icons": {
+        "16": "/assets/icons/icon16.png",
+        "32": "/assets/icons/icon32.png",
+        "48": "/assets/icons/icon48.png",
+        "128": "/assets/icons/icon128.png",
+        "500": "/assets/icons/icon500.png"
+          },
     "action": {
         "default_popup": "popup.html",
         "default_title": "Toppings",
-        "default_icon": "assets/icons/logo.png"
+        "default_icon": "assets/icons/icon500.png"
     }
 }

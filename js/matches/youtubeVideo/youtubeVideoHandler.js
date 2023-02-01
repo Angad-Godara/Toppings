@@ -1,133 +1,155 @@
+// Custom Playback Speed btn On Click Properties
 const onPlaybackSpeedBtnClicked = () => {
-	const customSpeedHeader = createPanelHeader(
-		'custom-speed-list-header',
-		'Back to previous menu',
-		'Playback speed',
-		{ isPanelOptions: true, optionsTitle: 'Custom' }
-	);
-	playerSettingsPanel.prepend(customSpeedHeader);
-	while (document.getElementsByClassName('ytp-menuitem')[0]) {
-		document.getElementsByClassName('ytp-menuitem')[0].remove();
-	}
+	// If custom speed header or speeds does not exists, create them and
+	const customSpeedHeaderExists = document.getElementsByClassName(
+		'custom-speed-list-header'
+	)[0];
+	const customSpeedExists = document.getElementsByClassName('custom-speed')[0];
 
-	playerSettingsMenu.append(
-		createMenuItem({
-			itemClass: 'custom-speed',
-			itemRole: 'menuitemradio',
-			itemTabIndex: '0',
-			itemLabel: '0.25',
-			itemOnClick: (event) => {
-				playbackSpeedHandler(0.25);
-				currentPlaybackSpeed.ariaChecked = false;
-				event.target.parentNode.ariaChecked = true;
-				currentPlaybackSpeed = event.target.parentNode;
+	if (!customSpeedHeaderExists || !customSpeedExists) {
+		// Creating Panel Header
+		const customSpeedHeader = createPanelHeader({
+			panelClass: 'custom-speed-list-header',
+			btnLabel: 'Back to previous menu',
+			btnOnClick: (event) => {
+				// Reset Settings Menu
+				let i = 0;
+				document.getElementsByClassName(
+					'custom-speed-list-header'
+				)[0].style.display = 'none';
+				while (document.getElementsByClassName('ytp-menuitem')[i]) {
+					document.getElementsByClassName('ytp-menuitem')[
+						i
+					].style.display = initialDisplay;
+					i = i + 1;
+				}
+				i = 0;
+				while (document.getElementsByClassName('custom-speed')[i]) {
+					document.getElementsByClassName('custom-speed')[i].style.display =
+						'none';
+					i = i + 1;
+				}
 			},
-		}),
-		createMenuItem({
-			itemClass: 'custom-speed',
-			itemRole: 'menuitemradio',
-			itemTabIndex: '0',
-			itemLabel: '0.5',
-			itemOnClick: () => {
-				playbackSpeedHandler(0.5);
-				currentPlaybackSpeed.ariaChecked = false;
-				event.target.parentNode.ariaChecked = true;
-				currentPlaybackSpeed = event.target.parentNode;
-			},
-		}),
-		createMenuItem({
-			itemClass: 'custom-speed',
-			itemRole: 'menuitemradio',
-			itemTabIndex: '0',
-			itemLabel: 'Normal',
-			hasAriaChecked: 'true',
-			itemOnClick: () => {
-				playbackSpeedHandler(1);
-				currentPlaybackSpeed.ariaChecked = false;
-				event.target.parentNode.ariaChecked = true;
-				currentPlaybackSpeed = event.target.parentNode;
-			},
-			options: (initialSpeedNode) => {
-				defaultPlaybackSpeed = initialSpeedNode;
-				currentPlaybackSpeed = initialSpeedNode;
-			},
-		}),
-		createMenuItem({
-			itemClass: 'custom-speed',
-			itemRole: 'menuitemradio',
-			itemTabIndex: '0',
-			itemLabel: '2',
-			itemOnClick: () => {
-				playbackSpeedHandler(2);
-				currentPlaybackSpeed.ariaChecked = false;
-				event.target.parentNode.ariaChecked = true;
-				currentPlaybackSpeed = event.target.parentNode;
-			},
-		}),
-		createMenuItem({
-			itemClass: 'custom-speed',
-			itemRole: 'menuitemradio',
-			itemTabIndex: '0',
-			itemLabel: '3',
-			itemOnClick: () => {
-				playbackSpeedHandler(3);
-				currentPlaybackSpeed.ariaChecked = false;
-				event.target.parentNode.ariaChecked = true;
-				currentPlaybackSpeed = event.target.parentNode;
-			},
-		}),
-		createMenuItem({
-			itemClass: 'custom-speed',
-			itemRole: 'menuitemradio',
-			itemTabIndex: '0',
-			itemLabel: '4',
-			itemOnClick: () => {
-				playbackSpeedHandler(4);
-				currentPlaybackSpeed.ariaChecked = false;
-				event.target.parentNode.ariaChecked = true;
-				currentPlaybackSpeed = event.target.parentNode;
-			},
-		}),
-		createMenuItem({
-			itemClass: 'custom-speed',
-			itemRole: 'menuitemradio',
-			itemTabIndex: '0',
-			itemLabel: '8',
-			itemOnClick: () => {
-				playbackSpeedHandler(8);
-				currentPlaybackSpeed.ariaChecked = false;
-				event.target.parentNode.ariaChecked = true;
-				currentPlaybackSpeed = event.target.parentNode;
-			},
-		}),
-		createMenuItem({
-			itemClass: 'custom-speed',
-			itemRole: 'menuitemradio',
-			itemTabIndex: '0',
-			itemLabel: '16',
-			itemOnClick: () => {
-				playbackSpeedHandler(16);
-				currentPlaybackSpeed.ariaChecked = false;
-				event.target.parentNode.ariaChecked = true;
-				currentPlaybackSpeed = event.target.parentNode;
-			},
-		})
-	);
+			panelTitle: 'Playback speed',
+			panelOptions: { isPanelOptions: true, optionsTitle: 'Custom' },
+		});
+
+		// Creating Speeds
+		let i = 0;
+		while (document.getElementsByClassName('ytp-menuitem')[i]) {
+			document.getElementsByClassName('ytp-menuitem')[i].style.display = 'none';
+			i = i + 1;
+		}
+
+		playerSettingsMenu.append(
+			...customSpeedList.map((speed) => {
+				if (speed != 1) {
+					return createMenuItem({
+						itemClass: 'custom-speed',
+						itemRole: 'menuitemradio',
+						itemTabIndex: '0',
+						itemLabel: speed.toString(),
+						itemOnClick: (event) => {
+							playbackSpeedHandler(speed);
+							currentPlaybackSpeed.ariaChecked = false;
+							event.target.parentNode.ariaChecked = true;
+							currentPlaybackSpeed = event.target.parentNode;
+							document.getElementsByClassName(
+								'custom-speed-item'
+							)[0].children[2].textContent = speed.toString();
+						},
+					});
+				} else {
+					return createMenuItem({
+						itemClass: 'custom-speed',
+						itemRole: 'menuitemradio',
+						itemTabIndex: '0',
+						itemLabel: 'Normal',
+						hasAriaChecked: 'true',
+						itemOnClick: () => {
+							playbackSpeedHandler(1);
+							currentPlaybackSpeed.ariaChecked = false;
+							event.target.parentNode.ariaChecked = true;
+							currentPlaybackSpeed = event.target.parentNode;
+							currentPlaybackSpeed = event.target.parentNode;
+							document.getElementsByClassName(
+								'custom-speed-item'
+							)[0].children[2].textContent = 'Normal';
+						},
+						options: (initialSpeedNode) => {
+							defaultPlaybackSpeed = initialSpeedNode;
+							currentPlaybackSpeed = initialSpeedNode;
+						},
+					});
+				}
+			})
+		);
+
+		// And Insert them
+		playerSettingsPanel.prepend(customSpeedHeader);
+	} else {
+		// If custom speed header does exists, show it
+		document.getElementsByClassName(
+			'custom-speed-list-header'
+		)[0].style.display = initialDisplay;
+
+		// If Speeds exists show them
+		let i = 0;
+		while (document.getElementsByClassName('ytp-menuitem')[i]) {
+			document.getElementsByClassName('ytp-menuitem')[i].style.display = 'none';
+			i = i + 1;
+		}
+		i = 0;
+		while (document.getElementsByClassName('custom-speed')[i]) {
+			document.getElementsByClassName('custom-speed')[
+				i
+			].style.display = initialDisplay;
+			i = i + 1;
+		}
+	}
 };
 
+// Definition of custom player speed topping
 const playerSpeedHandler = () => {
-	playerSettingsBtn.addEventListener(
-		'click',
-		() => {
+	// When player setting btn is clicked!! Either custom btn has to be inserted or it already exists so menu should be reset
+	playerSettingsBtn.addEventListener('click', () => {
+		const customSpeedItemExists = document.getElementsByClassName(
+			'custom-speed-item'
+		)[0];
+		// If custom playback btn does not exists, create it and replace original btn
+		if (!customSpeedItemExists) {
 			isSettingsMenuActivated = true;
+
 			const playbackSpeedBtn = document.getElementsByClassName(
 				'ytp-menuitem'
 			)[2];
 			playerSettingsMenu.replaceChild(customSpeedItem, playbackSpeedBtn);
-		},
-		{ once: true }
-	);
+			initialDisplay = document.getElementsByClassName('ytp-menuitem')[0].style
+				.display;
+		} else {
+			// If custom playback btn does exists, reset the menu
+			setTimeout(() => {
+				let i = 0;
+				document.getElementsByClassName(
+					'custom-speed-list-header'
+				)[0].style.display = 'none';
+				while (document.getElementsByClassName('ytp-menuitem')[i]) {
+					document.getElementsByClassName('ytp-menuitem')[
+						i
+					].style.display = initialDisplay;
+					i = i + 1;
+				}
+				i = 0;
+				while (document.getElementsByClassName('custom-speed')[i]) {
+					document.getElementsByClassName('custom-speed')[i].style.display =
+						'none';
+					i = i + 1;
+				}
+			}, 100);
+		}
+	});
 
+	// Creating custom playback speed button for Menu
 	const customSpeedItem = createMenuItem({
 		itemClass: 'custom-speed-item',
 		hasAriaPopUp: 'true',
@@ -141,10 +163,12 @@ const playerSpeedHandler = () => {
 	});
 };
 
+// The encapsulations of all watch toppings
 const youtubeVideoHandler = () => {
 	playerSpeedHandler();
 };
 
+// Load watch toppings after page is loaded
 window.onload = (event) => {
 	youtubeVideoHandler();
 };
