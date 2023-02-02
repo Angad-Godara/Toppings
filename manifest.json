@@ -5,8 +5,6 @@
     "author": "business.darhkvoyd@gmail.com",
     "version": "0.0.1",
     "description": "Toppings is a browser extension which packs several add-ons & additional features to enhance your Youtube experience",
-    "permissions": ["activeTab", "storage", "tabs"],
-    "host_permissions": ["https://*.youtube.com/*"],
     "background":{
         "service_worker": "/js/background.js"
     },
