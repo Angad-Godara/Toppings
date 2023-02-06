@@ -3,7 +3,7 @@
     "name": "Toppings",
     "short_name": "Topps",
     "author": "business.darhkvoyd@gmail.com",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Toppings is a browser extension which packs several add-ons & additional features to enhance your Youtube experience",
     "background":{
         "service_worker": "/js/background.js"
@@ -18,11 +18,12 @@
         "32": "/assets/icons/icon32.png",
         "48": "/assets/icons/icon48.png",
         "128": "/assets/icons/icon128.png",
-        "500": "/assets/icons/icon500.png"
+        "256": "/assets/icons/icon256.png",
+        "512": "/assets/icons/icon512.png"
           },
     "action": {
         "default_popup": "popup.html",
         "default_title": "Toppings",
-        "default_icon": "assets/icons/icon500.png"
+        "default_icon": "assets/icons/icon256.png"
     }
 }
