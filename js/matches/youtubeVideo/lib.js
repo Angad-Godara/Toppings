@@ -3,7 +3,7 @@ const minPlaybackRate = 0.0625;
 const maxPlaybackRate = 16.0;
 const customSpeedList = [0.25, 0.5, 1, 1.5, 1.75, 2, 2.5, 3];
 
-// Global Variables
+// Global DOM Elements
 const playerSettingsBtn = document.getElementsByClassName(
 	'ytp-settings-button'
 )[0];
@@ -20,6 +20,66 @@ let currentPlaybackSpeed = defaultPlaybackSpeed;
 const playbackSpeedHandler = (speed) => {
 	if (speed > minPlaybackRate && speed < maxPlaybackRate) {
 		document.querySelector('video').playbackRate = speed;
+		return { type: 'SUCCESS', response: `Current Speed: ${speed}` };
+	} else {
+		return { type: 'ERROR', response: 'Invalid Speed' };
+	}
+};
+
+const createPanelHeader = (
+	customHeader = {
+		panelClass: '',
+		btnLabel: '',
+		btnOnClick: (event) => {},
+		panelTitle: '',
+		panelOptions: { isPanelOptions: false, optionsTitle: '' },
+		options: (event) => {},
+	}
+) => {
+	const PanelHeaderExists = document.getElementsByClassName(
+		customHeader.panelClass
+	)[0];
+	if (!PanelHeaderExists) {
+		// Panel Header
+		const PanelHeader = document.createElement('div');
+		PanelHeader.className = 'ytp-panel-header ' + customHeader.panelClass;
+
+		if (!!customHeader.options) {
+			customHeader.options(PanelHeader);
+		}
+
+		// -> BackBtn Container
+		const BackBtnContainer = document.createElement('div');
+		BackBtnContainer.className = 'ytp-panel-back-button-container';
+		BackBtnContainer.addEventListener('click', customHeader.btnOnClick);
+		PanelHeader.appendChild(BackBtnContainer);
+
+		// -> -> BackBtn
+		const BackBtn = document.createElement('button');
+		BackBtn.className = 'ytp-button ytp-panel-back-button';
+		BackBtn.setAttribute('aria-label', customHeader.btnLabel);
+		BackBtnContainer.appendChild(BackBtn);
+
+		// -> Panel Title
+		const PanelTitle = document.createElement('span');
+		PanelTitle.className = 'ytp-panel-title';
+		PanelTitle.setAttribute('tabindex', '0');
+		const PanelHeaderText = document.createTextNode(customHeader.panelTitle);
+		PanelTitle.appendChild(PanelHeaderText);
+		PanelHeader.appendChild(PanelTitle);
+
+		if (customHeader.panelOptions.isPanelOptions) {
+			// ->Panel Options
+			const PanelOptions = document.createElement('button');
+			PanelOptions.className = 'ytp-button ytp-panel-options';
+			const PanelOptionsText = document.createTextNode(
+				customHeader.panelOptions.optionsTitle
+			);
+			PanelOptions.appendChild(PanelOptionsText);
+			PanelHeader.appendChild(PanelOptions);
+		}
+
+		return PanelHeader;
 	}
 };
 
@@ -101,62 +161,5 @@ const createMenuItem = (
 		}
 
 		return MenuItem;
-	}
-};
-
-const createPanelHeader = (
-	customHeader = {
-		panelClass: '',
-		btnLabel: '',
-		btnOnClick: (event) => {},
-		panelTitle: '',
-		panelOptions: { isPanelOptions: false, optionsTitle: '' },
-		options: (event) => {},
-	}
-) => {
-	const PanelHeaderExists = document.getElementsByClassName(
-		customHeader.panelClass
-	)[0];
-	if (!PanelHeaderExists) {
-		// Panel Header
-		const PanelHeader = document.createElement('div');
-		PanelHeader.className = 'ytp-panel-header ' + customHeader.panelClass;
-
-		if (!!customHeader.options) {
-			customHeader.options(PanelHeader);
-		}
-
-		// -> BackBtn Container
-		const BackBtnContainer = document.createElement('div');
-		BackBtnContainer.className = 'ytp-panel-back-button-container';
-		BackBtnContainer.addEventListener('click', customHeader.btnOnClick);
-		PanelHeader.appendChild(BackBtnContainer);
-
-		// -> -> BackBtn
-		const BackBtn = document.createElement('button');
-		BackBtn.className = 'ytp-button ytp-panel-back-button';
-		BackBtn.setAttribute('aria-label', customHeader.btnLabel);
-		BackBtnContainer.appendChild(BackBtn);
-
-		// -> Panel Title
-		const PanelTitle = document.createElement('span');
-		PanelTitle.className = 'ytp-panel-title';
-		PanelTitle.setAttribute('tabindex', '0');
-		const PanelHeaderText = document.createTextNode(customHeader.panelTitle);
-		PanelTitle.appendChild(PanelHeaderText);
-		PanelHeader.appendChild(PanelTitle);
-
-		if (customHeader.panelOptions.isPanelOptions) {
-			// ->Panel Options
-			const PanelOptions = document.createElement('button');
-			PanelOptions.className = 'ytp-button ytp-panel-options';
-			const PanelOptionsText = document.createTextNode(
-				customHeader.panelOptions.optionsTitle
-			);
-			PanelOptions.appendChild(PanelOptionsText);
-			PanelHeader.appendChild(PanelOptions);
-		}
-
-		return PanelHeader;
 	}
 };

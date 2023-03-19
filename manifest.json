@@ -1,18 +1,15 @@
 {
     "manifest_version":3,
-    "name": "Toppings",
-    "short_name": "Topps",
+    "name": "Toppings: Enrich, Simplify, Enjoy",
+    "short_name": "Toppings",
     "author": "business.darhkvoyd@gmail.com",
     "version": "0.0.2",
-    "description": "Toppings is a browser extension which packs several add-ons & additional features to enhance your Youtube experience",
+    "description": "Welcome to Toppings, the ultimate Chrome extension for enhancing your YouTube experience!",
     "background":{
         "service_worker": "/js/background.js"
     },
-    "content_scripts": [{
-        "matches": ["https://*.youtube.com/watch*"],
-        "js": ["js/matches/youtubeVideo/lib.js","js/matches/youtubeVideo/youtubeVideoHandler.js"],
-        "run_at": "document_end"
-        }],
+    "permissions": ["scripting", "activeTab", "storage", "tabs"],
+    "host_permissions": ["https://*.youtube.com/*"],
     "icons": {
         "16": "/assets/icons/icon16.png",
         "32": "/assets/icons/icon32.png",
