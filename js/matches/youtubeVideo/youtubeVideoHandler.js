@@ -18,9 +18,8 @@ const onPlaybackSpeedBtnClicked = () => {
 					'custom-speed-list-header'
 				)[0].style.display = 'none';
 				while (document.getElementsByClassName('ytp-menuitem')[i]) {
-					document.getElementsByClassName('ytp-menuitem')[
-						i
-					].style.display = initialDisplay;
+					document.getElementsByClassName('ytp-menuitem')[i].style.display =
+						initialDisplay;
 					i = i + 1;
 				}
 				i = 0;
@@ -100,9 +99,8 @@ const onPlaybackSpeedBtnClicked = () => {
 		}
 		i = 0;
 		while (document.getElementsByClassName('custom-speed')[i]) {
-			document.getElementsByClassName('custom-speed')[
-				i
-			].style.display = initialDisplay;
+			document.getElementsByClassName('custom-speed')[i].style.display =
+				initialDisplay;
 			i = i + 1;
 		}
 	}
@@ -125,19 +123,17 @@ const playerSpeedHandler = () => {
 
 	// When player setting btn is clicked!! Either custom btn has to be inserted or it already exists so menu should be reset
 	playerSettingsBtn.addEventListener('click', () => {
-		const customSpeedItemExists = document.getElementsByClassName(
-			'custom-speed-item'
-		)[0];
+		const customSpeedItemExists =
+			document.getElementsByClassName('custom-speed-item')[0];
 		// If custom playback btn does not exists, create it and replace original btn
 		if (!customSpeedItemExists) {
 			isSettingsMenuActivated = true;
 
-			const playbackSpeedBtn = document.getElementsByClassName(
-				'ytp-menuitem'
-			)[2];
+			const playbackSpeedBtn =
+				document.getElementsByClassName('ytp-menuitem')[2];
 			playerSettingsMenu.replaceChild(customSpeedItem, playbackSpeedBtn);
-			initialDisplay = document.getElementsByClassName('ytp-menuitem')[0].style
-				.display;
+			initialDisplay =
+				document.getElementsByClassName('ytp-menuitem')[0].style.display;
 		} else {
 			// If custom playback btn does exists, reset the menu
 			setTimeout(() => {
@@ -146,9 +142,8 @@ const playerSpeedHandler = () => {
 					'custom-speed-list-header'
 				)[0].style.display = 'none';
 				while (document.getElementsByClassName('ytp-menuitem')[i]) {
-					document.getElementsByClassName('ytp-menuitem')[
-						i
-					].style.display = initialDisplay;
+					document.getElementsByClassName('ytp-menuitem')[i].style.display =
+						initialDisplay;
 					i = i + 1;
 				}
 				i = 0;
@@ -167,13 +162,11 @@ const youtubeVideoHandler = () => {
 	playerSpeedHandler();
 };
 
-youtubeVideoHandler();
-
 // Events
 chrome.runtime.onMessage.addListener((obj, sender, response) => {
-	const { type, value, playlistID } = obj;
+	const { type, value, videoID } = obj;
 
 	if (type === 'WATCH') {
-		console.log(obj);
+		youtubeVideoHandler();
 	}
 });
