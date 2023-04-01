@@ -1,0 +1,189 @@
+/* Global Styles */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+}
+
+body {
+	background-color: #f2f2f2;
+	font-size: 16px;
+	line-height: 1.5;
+	color: #333;
+}
+
+/* Navigation */
+
+nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px;
+	position: relative;
+	z-index: 1;
+	background-color: white;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease-in-out;
+}
+
+nav.fixed {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+nav .logo {
+	display: flex;
+	align-items: center;
+}
+
+nav .logo img {
+	height: 40px;
+	margin-right: 10px;
+}
+
+nav .cta {
+	display: flex;
+	align-items: center;
+	opacity: 0;
+	visibility: hidden;
+}
+
+nav.fixed .cta {
+	opacity: 1;
+	visibility: visible;
+}
+
+nav .cta a {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: #007aff;
+	color: #fff;
+	font-size: 14px;
+	font-weight: bold;
+	border-radius: 5px;
+	text-decoration: none;
+	margin-right: 10px;
+	transition: background-color 0.3s ease-in-out;
+}
+
+nav .cta a:hover {
+	background-color: #0066cc;
+}
+
+/* Sections */
+
+div .cta p {
+	color: gray;
+}
+section {
+	padding: 60px 0;
+}
+
+section .content {
+	max-width: 1200px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+section h2 {
+	font-size: 32px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+section h3 {
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+section p {
+	font-size: 18px;
+	margin-bottom: 30px;
+}
+
+section img {
+	display: block;
+	max-width: 100%;
+	margin-bottom: 30px;
+}
+
+section ol {
+	text-align: left;
+	margin-bottom: 30px;
+}
+
+section ol li {
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+/* CTA Button */
+.cta-button {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: #007aff;
+	color: #fff;
+	font-size: 18px;
+	font-weight: bold;
+	border-radius: 5px;
+	text-decoration: none;
+	margin-top: 30px;
+	transition: background-color 0.3s ease-in-out;
+}
+
+.cta-button:hover {
+	background-color: #0066cc;
+}
+
+.last-section {
+	background-color: #f8f8f8;
+	padding: 80px 0;
+	text-align: center;
+}
+
+/* Footer */
+footer {
+	background-color: #000;
+	color: #fff;
+	padding: 60px 0;
+}
+
+footer h4 {
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+footer ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+footer ul li {
+	margin-bottom: 10px;
+}
+
+footer ul li a {
+	color: #757575;
+	text-decoration: none;
+}
+
+footer ul li a:hover {
+	text-decoration: underline;
+}
+
+footer .row {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+footer .col-md-4 {
+	margin: 0 10px;
+	padding: 0 10px;
+}
