@@ -1,23 +1,64 @@
-// GLOBAL CONSTANTS
+/**
+ * GLOBAL CONSTANTS
+ */
 const minPlaybackRate = 0.0625;
 const maxPlaybackRate = 16.0;
 const customSpeedList = [0.25, 0.5, 1, 1.5, 1.75, 2, 2.5, 3];
 
-// Global DOM Elements
-const playerSettingsBtn = document.getElementsByClassName(
-	'ytp-settings-button'
-)[0];
-const playerSettingsPanel = document.getElementsByClassName('ytp-panel')[0];
-const playerSettingsMenu = document.getElementsByClassName('ytp-panel-menu')[0];
-let initialDisplay = document.getElementsByClassName('ytp-panel')[0].style
-	.display;
-let isSettingsMenuActivated = false;
-let playbackSpeedBtn = HTMLDivElement;
-let defaultPlaybackSpeed = Node;
-let currentPlaybackSpeed = defaultPlaybackSpeed;
+/**
+ * Utility
+ */
 
-// Global Functions
-const playbackSpeedHandler = (speed) => {
+// To fetch Toppings playlist API
+const playlistsAPIHandler = async (playlistId) => {
+	if (!playlistId) {
+		playlistId = new URLSearchParams(window.location.search).get('list');
+	}
+	const httpResponse = await fetch(
+		`https://toppings.pythonanywhere.com/v1/playlists/${playlistId}`,
+		{
+			method: 'GET',
+			headers: {
+				Accept: 'application/json',
+			},
+		}
+	);
+	const response = await httpResponse.json();
+	console.log('api was called');
+	return response;
+};
+
+// To parse the datetime object into readable time
+const parse = (runtime) => {
+	let ts = runtime.seconds;
+	let td = runtime.days;
+	let th, tr, tm, ds;
+
+	[th, tr] = [Math.floor(ts / 3600), ts % 3600];
+	[tm, ts] = [Math.floor(tr / 60), tr % 60];
+
+	ds = '';
+	if (td) {
+		ds += ` ${td} day${td !== 1 ? 's' : ''},`;
+	}
+	if (th) {
+		ds += ` ${th} hour${th !== 1 ? 's' : ''},`;
+	}
+	if (tm) {
+		ds += ` ${tm} minute${tm !== 1 ? 's' : ''},`;
+	}
+	if (ts) {
+		ds += ` ${ts} second${ts !== 1 ? 's' : ''}`;
+	}
+	if (ds === '') {
+		ds = '0 seconds';
+	}
+
+	return ds.trim().replace(/(^,)|(,$)/g, '');
+};
+
+// Set YouTube Player playback speed
+const setPlaybackSpeed = (speed) => {
 	if (speed > minPlaybackRate && speed < maxPlaybackRate) {
 		document.querySelector('video').playbackRate = speed;
 		return { type: 'SUCCESS', response: `Current Speed: ${speed}` };
@@ -26,8 +67,19 @@ const playbackSpeedHandler = (speed) => {
 	}
 };
 
+// Get YouTube Player playback speed
+const getPlaybackSpeed = () => {
+	return document.querySelector('video').playbackRate;
+};
+
+/**
+ * DOM Manipulation
+ */
+
+// To create a header for YouTube Player Menu
 const createPanelHeader = (
 	customHeader = {
+		panelId: '',
 		panelClass: '',
 		btnLabel: '',
 		btnOnClick: (event) => {},
@@ -42,7 +94,15 @@ const createPanelHeader = (
 	if (!PanelHeaderExists) {
 		// Panel Header
 		const PanelHeader = document.createElement('div');
-		PanelHeader.className = 'ytp-panel-header ' + customHeader.panelClass;
+		if (!!customHeader.panelId) {
+			PanelHeader.id = customHeader.panelId;
+		}
+
+		if (!!customHeader.className) {
+			PanelHeader.className = 'ytp-panel-header ' + customHeader.panelClass;
+		} else {
+			PanelHeader.className = 'ytp-panel-header';
+		}
 
 		if (!!customHeader.options) {
 			customHeader.options(PanelHeader);
@@ -83,8 +143,10 @@ const createPanelHeader = (
 	}
 };
 
+// To create a Menu Item for YouTube Player Menu
 const createMenuItem = (
 	customItem = {
+		itemId: '',
 		itemClass: '',
 		hasAriaPopUp: '',
 		hasAriaChecked: '',
@@ -101,9 +163,21 @@ const createMenuItem = (
 		customItem.itemClass
 	)[0];
 	if (!MenuItemExists) {
-		// Menu Item
+		// Menu Item Wrapper
 		const MenuItem = document.createElement('div');
-		MenuItem.className = 'ytp-menuitem ' + customItem.itemClass;
+
+		// Menu Item ID
+		if (!!customItem.itemId) {
+			MenuItem.id = customItem.itemId;
+		}
+
+		if (!!customItem.itemClass) {
+			// Menu Item Class
+			MenuItem.className = 'ytp-menuitem ' + customItem.itemClass;
+		} else {
+			MenuItem.className = 'ytp-menuitem';
+		}
+
 		if (!!customItem.hasAriaPopUp) {
 			MenuItem.setAttribute('aria-haspopup', customItem.hasAriaPopUp);
 		}
@@ -162,4 +236,97 @@ const createMenuItem = (
 
 		return MenuItem;
 	}
+};
+
+// To create a custom metadata section in the metadata action bar assuming its loaded
+const createMetadataSection = (
+	metadataSection = {
+		sectionId: '',
+		sectionClass: '',
+		headerIcon: '',
+		headerTitle: '',
+		items: [],
+		options: (event) => {},
+	}
+) => {
+	const MetadataSectionExists = document.getElementsByClassName(
+		metadataSection.sectionClass
+	)[0];
+	if (!MetadataSectionExists) {
+		// Metadata Section Wrapper
+		const MetadataSection = document.createElement('div');
+
+		// Metadata Section ID
+		if (!!metadataSection.sectionId) {
+			MetadataSection.id = metadataSection.sectionId;
+		}
+
+		if (!!metadataSection.sectionClass) {
+			// Metadata Section Class
+			MetadataSection.className =
+				'metadata-section ' + metadataSection.sectionClass;
+		} else {
+			MetadataSection.className = 'metadata-section';
+		}
+
+		if (!!metadataSection.options) {
+			metadataSection.options(MetadataSection);
+		}
+
+		if (!!metadataSection.headerIcon) {
+			// Metadata Section Icon
+			const headerIcon = document.createElement('img');
+			headerIcon.className = 'metadata-section-icon';
+			headerIcon.src = metadataSection.headerIcon;
+			MetadataSection.appendChild(headerIcon);
+		}
+
+		if (!!metadataSection.headerTitle) {
+			// Metadata Section Title
+			const headerTitle = document.createElement('h3');
+			headerTitle.className = 'metadata-section-title';
+			headerTitle.textContent = document.createTextNode(
+				metadataSection.headerTitle
+			);
+			MetadataSection.appendChild(headerTitle);
+		}
+
+		if (!!metadataSection.items) {
+			// Metadata Section Children
+			MetadataSection.append(...metadataSection.items);
+		}
+
+		return MetadataSection;
+	}
+};
+
+// To create section items to populate into metadata section
+const createSectionItem = (
+	item = {
+		id: '',
+		className: '',
+		children: [],
+		options: (event) => {},
+	}
+) => {
+	const SectionItem = document.createElement('div');
+	// Item ID
+	if (!!item.id) {
+		SectionItem.id = item.id;
+	}
+
+	if (!!item.className) {
+		// Item Class
+		SectionItem.className = 'section-item ' + item.className;
+	} else {
+		SectionItem.className = 'section-item';
+	}
+
+	if (!!item.options) {
+		item.options(SectionItem);
+	}
+
+	SectionItem.append(...item.children);
+
+	return SectionItem;
 };
