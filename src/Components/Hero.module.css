@@ -1,0 +1,71 @@
+.hero {
+	background-color: #f2f2f2;
+	position: relative;
+	top: 0;
+	left: 0;
+	margin: 0 auto;
+	height: 100vh;
+	width: 100vw;
+	text-align: center;
+	display: grid;
+	grid-template-columns: auto auto;
+	align-content: center;
+}
+
+.hero-content {
+	height: 100%;
+	width: 100%;
+	margin: 0 40px;
+	padding: 0 60px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.hero-graphics {
+	margin: 0 40px;
+	padding: 0 20px;
+}
+
+.hero h2 {
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-size: 42px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.hero h3 {
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.hero p {
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-size: 18px;
+	margin-bottom: 30px;
+}
+
+.hero .cta p {
+	color: gray;
+}
+
+/* CTA Button */
+.cta-button {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: #912917;
+	color: #fff;
+	font-size: 18px;
+	font-weight: bold;
+	border-radius: 5px;
+	text-decoration: none;
+	margin-top: 30px;
+	margin-bottom: 10px;
+	transition: background-color 0.3s ease-in-out;
+}
+
+.cta-button:hover {
+	background-color: #7d1f0e;
+}
