@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/Toppings/static/css/main.a4b53ea2.css",
+    "main.js": "/Toppings/static/js/main.48c06a35.js",
+    "static/media/icon512.png": "/Toppings/static/media/icon512.eb19e7a514ef4a7e2f49.png",
+    "index.html": "/Toppings/index.html",
+    "main.a4b53ea2.css.map": "/Toppings/static/css/main.a4b53ea2.css.map",
+    "main.48c06a35.js.map": "/Toppings/static/js/main.48c06a35.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a4b53ea2.css",
+    "static/js/main.48c06a35.js"
+  ]
+}
