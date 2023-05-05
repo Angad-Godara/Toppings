@@ -9,7 +9,7 @@ const Footer = () => {
 						<h4>Developers</h4>
 						<ul className={styles['list-unstyled']}>
 							<li>
-								<a href="https://github.com/DarhkVoyd/Toppings">
+								<a href="https://github.com/DarhkVoyd/Toppings/tree/dev">
 									Contribute to Toppings
 								</a>
 							</li>

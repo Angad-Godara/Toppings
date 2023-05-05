@@ -1,26 +1,24 @@
----
-name: Build and Deploy React App to GitHub Pages
+name: Deploy to GitHub Pages
+
 on:
   push:
-    branches: [gh-pages-react]
+    branches:
+      - gh-pages-react
+
 jobs:
-  build-and-deploy:
-    name: Build and Deploy
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      - name: Build
-        run: npm install
-
-      - name: Test
-        run: npm run test
-
-      - name: Deploy
+      - name: Install dependencies
         run: |
-          git config --global user.name 'D V'
-          git config --global user.email 'divyadityasnaruka@gmail.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          npm run deploy
+          npm install
+          npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages
+          folder: build
