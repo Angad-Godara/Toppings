@@ -24,17 +24,19 @@ const FooterNav = () => {
 			],
 		},
 	];
+
+	const middleIndex = Math.ceil(navList.length / 2);
 	return (
 		<div className={styles['footer-nav']}>
 			<div className={styles['list-group']}>
-				{navList.map((category, i) => {
+				{navList.slice(0, middleIndex).map((category, i) => {
 					return (
 						<NavList key={i} title={category.title} links={category.links} />
 					);
 				})}
 			</div>
 			<div className={styles['list-group']}>
-				{navList.map((category, i) => {
+				{navList.slice(middleIndex).map((category, i) => {
 					return (
 						<NavList key={i} title={category.title} links={category.links} />
 					);
