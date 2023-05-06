@@ -26,6 +26,13 @@ nav .logo {
 	align-items: center;
 }
 
+nav .logo h1 {
+	display: block;
+	font-size: 1.5em;
+	font-weight: bold;
+	line-height: 1.5;
+}
+
 nav .logo img {
 	height: 40px;
 	margin-right: 10px;

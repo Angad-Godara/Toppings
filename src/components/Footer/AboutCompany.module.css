@@ -1,0 +1,24 @@
+.company > :not(img) {
+	margin-top: 2rem;
+}
+
+.company img {
+	height: 1.75rem;
+	max-width: 100%;
+	display: block;
+}
+
+.company p {
+	color: rgb(209 213 219);
+	line-height: 1.5rem;
+	font-size: 0.875rem;
+}
+
+.social-icons {
+	color: rgb(107 114 128);
+}
+
+.social-icons svg {
+	width: 1.5rem;
+	height: 1.5rem;
+}

@@ -1,10 +1,10 @@
 import logo from '../assets/icon512.png';
 
-import styles from './Hero.module.css';
+import styles from './HeroSection.module.css';
 
-const Hero = () => {
+const HeroSection = () => {
 	return (
-		<div className={styles.hero}>
+		<main className={styles.hero}>
 			<div className={styles['hero-content']}>
 				<h2>Get the Most Out of Your YouTube Experience</h2>
 				<h3>Toppings for Youtube</h3>
@@ -29,8 +29,8 @@ const Hero = () => {
 			<div className={styles['hero-graphics']}>
 				<img src={logo} alt="Toppings Logo" draggable="false"></img>
 			</div>
-		</div>
+		</main>
 	);
 };
 
-export default Hero;
+export default HeroSection;

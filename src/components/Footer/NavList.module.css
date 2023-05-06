@@ -1,0 +1,17 @@
+.nav-list h4 {
+	margin: 0;
+	color: white;
+	line-height: 1.5rem;
+	font-weight: 600;
+	font-size: 0.875rem;
+}
+
+.item-list {
+	margin-top: 1.5rem;
+	list-style: none;
+	padding: 0;
+}
+
+.item-list > :not(:first-child) {
+	margin-top: 1rem;
+}

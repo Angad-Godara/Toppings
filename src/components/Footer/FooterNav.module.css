@@ -1,0 +1,30 @@
+.footer-nav {
+	margin-top: 4rem;
+	display: grid;
+	grid-column: span 2;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 2rem;
+}
+
+.list-group > :not(:first-child) {
+	margin-top: 2.5rem;
+}
+
+@media (min-width: 1280px) {
+	.footer-nav {
+		margin-top: 0px;
+		grid-column: span 2;
+	}
+}
+
+@media (min-width: 768px) {
+	.list-group {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 2rem;
+	}
+
+	.list-group > :not(:first-child) {
+		margin-top: 0px;
+	}
+}

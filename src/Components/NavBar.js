@@ -5,7 +5,7 @@ const NavBar = () => {
 	return (
 		<nav>
 			<div className={styles.logo}>
-				<img src={logo} alt="Toppings Logo" />
+				<img src={logo} alt="Toppings Logo" draggable="false" />
 				<h1>Toppings</h1>
 			</div>
 			<div className={styles.cta}>

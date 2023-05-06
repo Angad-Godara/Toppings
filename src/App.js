@@ -1,10 +1,12 @@
 import './App.css';
-import Hero from './Components/Hero';
-import NavBar from './Components/NavBar';
-import Footer from './Components/Footer';
+import NavBar from './components/NavBar';
+import Footer from './components/Footer/Footer';
 import { useEffect } from 'react';
-import navStyles from './Components/NavBar.module.css';
-import heroStyles from './Components/Hero.module.css';
+import navStyles from './components/NavBar.module.css';
+import heroStyles from './components/HeroSection.module.css';
+import ContentSection from './components/ContentSection';
+import HeroSection from './components/HeroSection';
+
 function App() {
 	useEffect(() => {
 		const navbar = document.querySelector('nav');
@@ -33,7 +35,8 @@ function App() {
 	return (
 		<div className="App">
 			<NavBar />
-			<Hero />
+			<HeroSection />
+			<ContentSection />
 			<Footer />
 		</div>
 	);
