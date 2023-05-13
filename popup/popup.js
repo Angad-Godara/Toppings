@@ -1,49 +1,100 @@
-document.addEventListener('DOMContentLoaded', function () {
-	document.querySelector('#home').addEventListener('click', function () {
-		document.querySelector('li.active').className = '';
-		document.querySelector('li#home').className = 'active';
-
-		document.querySelector('div.popup-content').innerHTML = ``;
-	});
-
-	document.querySelector('#notify').addEventListener('click', function () {
-		document.querySelector('li.active').className = '';
-		document.querySelector('li#notify').className = 'active';
-
-		document.querySelector('div.popup-content').innerHTML = `
-		<h1>You're all caught up!</h1>
-		<p>Once you receive a new notification, it will appear here.</p>`;
-	});
-
-	document.querySelector('#settings').addEventListener('click', function () {
-		window.open(chrome.runtime.getURL('options/options.html'));
-	});
-
-	document.querySelector('#help').addEventListener('click', function () {
-		window.open('https://github.com/darhkvoyd/toppings');
-	});
-});
-
-// DOM Elements
-const toggleSwitch = document.querySelector('#toppings-toggle');
-
-// Extract data from manifest
+/**
+ * Config
+ */
 const version = chrome.runtime.getManifest().version;
-
 document.getElementById('version').textContent = version;
+let content;
 
-// Listen for changes to the toggle switch
-toggleSwitch.addEventListener('change', () => {
-	// Send a message to the background script to toggle the extension on or off
-	chrome.runtime.sendMessage({ type: 'toggle' });
+/**
+ * Render
+ */
 
-	// Store the state of the toggle switch in local storage
-	chrome.storage.local.set({ 'toppings-toggle': toggleSwitch.checked });
-});
+const renderHome = () => {
+	if (document.querySelector('li#home').className === 'active') {
+		return;
+	}
+	if (document.querySelector('li#home').className != 'onload') {
+		document.querySelector('li.active').className = '';
+	}
 
-// Retrieve the state of the toggle switch from local storage
-chrome.storage.local.get('toppings-toggle', (data) => {
-	// Set the state of the toggle switch to the stored value or "on" if no value is found
-	toggleSwitch.checked =
-		data['toppings-toggle'] !== undefined ? data['toppings-toggle'] : true;
+	document.querySelector('li#home').className = 'active';
+
+	const icon = document.createElement('img');
+	icon.setAttribute('src', chrome.runtime.getURL('popup/assets/homepage.jpg'));
+	icon.setAttribute('class', 'icon');
+	icon.setAttribute('draggable', 'false');
+
+	const heading = document.createElement('h1');
+	heading.setAttribute('class', 'heading');
+	heading.append(document.createTextNode('Welcome to Toppings!'));
+
+	const message = document.createElement('p');
+	message.setAttribute('class', 'message');
+	message.append(
+		document.createTextNode(
+			'Add extra flavors to your YouTube experience with our extension. Customize and enhance your video watching.'
+		)
+	);
+
+	content.replaceChildren(icon, heading, message);
+	// content.style.background = `url("${background}")`;
+	// content.style.backgroundRepeat = 'no-repeat';
+	// content.style.backgroundPosition = 'center';
+	// content.style.backgroundAttachment = 'fixed';
+	// content.style.backgroundSize = 'cover';
+};
+
+const renderNotifications = () => {
+	content.style.background = 'unset';
+	if (document.querySelector('li#notify').className === 'active') {
+		return;
+	}
+	document.querySelector('li.active').className = '';
+	document.querySelector('li#notify').className = 'active';
+
+	const icon = document.createElement('img');
+	icon.setAttribute(
+		'src',
+		chrome.runtime.getURL('popup/assets/all-caught-up.webp')
+	);
+	icon.setAttribute('class', 'icon');
+	icon.setAttribute('draggable', 'false');
+
+	const heading = document.createElement('h1');
+	heading.setAttribute('class', 'heading');
+	heading.append(document.createTextNode("You're all caught up!"));
+
+	const message = document.createElement('p');
+	message.setAttribute('class', 'message');
+	message.append(
+		document.createTextNode(
+			'Once you receive a new notification, it will appear here.'
+		)
+	);
+
+	content.replaceChildren(icon, heading, message);
+};
+
+const renderSettings = () => {
+	content.style.background = 'unset';
+	window.open(chrome.runtime.getURL('optios/options.html'));
+};
+
+const renderHelp = () => {
+	content.style.background = 'unset';
+	window.open('https://github.com/darhkvoyd/toppings');
+};
+
+/**
+ * Run
+ */
+document.addEventListener('DOMContentLoaded', function () {
+	content = document.querySelector('div.popup-content');
+	document.querySelector('#home').addEventListener('click', renderHome);
+	document
+		.querySelector('#notify')
+		.addEventListener('click', renderNotifications);
+	document.querySelector('#help').addEventListener('click', renderHelp);
+	document.querySelector('#settings').addEventListener('click', renderSettings);
+	renderHome();
 });
