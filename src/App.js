@@ -1,11 +1,15 @@
 import './App.css';
-import NavBar from './components/NavBar';
-import Footer from './components/Footer/Footer';
+import NavBar from './Components/NavBar';
+import Footer from './Components/Footer/Footer';
 import { useEffect } from 'react';
-import navStyles from './components/NavBar.module.css';
-import heroStyles from './components/HeroSection.module.css';
-import ContentSection from './components/ContentSection';
-import HeroSection from './components/HeroSection';
+import navStyles from './Components/NavBar.module.css';
+import heroStyles from './Components/HeroSection.module.css';
+import ContentSection from './Components/ContentSection';
+import HeroSection from './Components/HeroSection';
+import { Navigate, Route, Routes } from 'react-router';
+import Farewell from './Components/Farewell/Farewell';
+import Greetings from './Components/Greetings/Greetings';
+import { HashRouter } from 'react-router-dom';
 
 function App() {
 	useEffect(() => {
@@ -33,12 +37,31 @@ function App() {
 		};
 	}, []);
 	return (
-		<div className="App">
-			<NavBar />
-			<HeroSection />
-			<ContentSection />
-			<Footer />
-		</div>
+		<HashRouter>
+			<Routes>
+				<Route exact path='/' element={
+					<div className="App">
+						<NavBar />
+						<HeroSection />
+						<ContentSection />
+						<Footer />
+					</div>
+				} />
+				<Route exact path='/greetings' element={
+					<div className="App">
+						<NavBar />
+						<Greetings />
+					</div>
+				} />
+				<Route exact path='/farewell' element={
+					<div className="App">
+						<NavBar />
+						<Farewell />
+					</div>
+				} />
+				<Route path='*' element={<Navigate to='/' />} />
+			</Routes>
+		</HashRouter>
 	);
 }
 

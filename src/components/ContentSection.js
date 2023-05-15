@@ -1,4 +1,4 @@
-import styles from './ContentSection.module.css';
+// import styles from './ContentSection.module.css';
 
 const ContentSection = () => {
 	return (
